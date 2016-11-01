@@ -8,9 +8,17 @@ const expect = chai.expect;
 
 const f = require('./functions');
 
-describe('getBungieId()', () => {
+// describe('getBungieId()', () => {
+//   it('', () => {
+//     return f.getBungieId('2', 'abbott567')
+//     .then(response => {
+//     });
+//   });
+// });
+
+describe('getCharacter()', () => {
   it('', () => {
-    return f.getBungieId('2', 'abbott567')
+    return f.getCharacter('2', '4611686018428682003')
     .then(response => {
     });
   });

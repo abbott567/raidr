@@ -14,5 +14,19 @@ module.exports = {
         reject(err);
       });
     });
+  },
+
+  getCharacter(platform, bungieId) {
+    return new Promise((resolve, reject) => {
+      got(`http://www.bungie.net/Platform/Destiny/${platform}/Account/${bungieId}/Summary/`, base)
+      .then(data => {
+        data = JSON.parse(data.body).Response.data.characters[0];
+        console.log(data);
+        resolve(data);
+      })
+      .catch(err => {
+        reject(err);
+      });
+    });
   }
 };
