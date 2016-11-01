@@ -14,5 +14,29 @@
     "jade": "~1.11.0",
     "morgan": "~1.6.1",
     "serve-favicon": "~2.3.0"
+  },
+  "devDependencies": {
+    "xo": "^0.17.0"
+  },
+  "xo": {
+    "space": true,
+    "ignores": [
+      "public/**"
+    ],
+    "env": [
+      "jquery",
+      "browser"
+    ],
+    "rules": {
+      "xo/no-process-exit": 0,
+      "no-unused-vars": [
+        2,
+        {
+          "args": "after-used",
+          "argsIgnorePattern": "^_"
+        }
+      ]
+    },
+    "esnext": true
   }
 }
