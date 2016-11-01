@@ -7,6 +7,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       got(`http://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/${platform}/${gamertag}`, base)
       .then(data => {
+        data = JSON.parse(data.body).Response[0].membershipId;
         resolve(data);
       })
       .catch(err => {
