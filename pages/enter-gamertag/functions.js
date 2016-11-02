@@ -21,7 +21,15 @@ module.exports = {
       got(`http://www.bungie.net/Platform/Destiny/${platform}/Account/${bungieId}/Summary/`, base)
       .then(data => {
         data = JSON.parse(data.body).Response.data.characters[0];
-        resolve(data);
+        const character = {
+          class: data.characterBase.classType,
+          level: data.characterLevel,
+          light: data.characterBase.powerLevel,
+          emblem: data.emblemPath,
+          background: data.backgroundPath,
+          grimoire: data.characterBase.grimoireScore
+        };
+        resolve(character);
       })
       .catch(err => {
         reject(err);
