@@ -16,6 +16,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/enter-gamertag', require('./pages/enter-gamertag/routes'));
+app.use('/api', require('./test/api-routes'));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
