@@ -10,8 +10,8 @@ module.exports = {
         data = JSON.parse(data.body).Response[0].membershipId;
         resolve(data);
       })
-      .catch(err => {
-        reject(err);
+      .catch(() => {
+        reject(false);
       });
     });
   },
@@ -31,8 +31,30 @@ module.exports = {
         };
         resolve(character);
       })
-      .catch(err => {
-        reject(err);
+      .catch(() => {
+        reject(false);
+      });
+    });
+  },
+
+  getRaids(platform, bungieId, characterId) {
+    return new Promise((resolve, reject) => {
+      got(`https://www.bungie.net/Platform/Destiny/Stats/ActivityHistory/${platform}/${bungieId}/${characterId}/?mode=Raid`, base)
+      .then(data => {
+        data = JSON.parse(data.body).Response.data.activities;
+        const completedRaids = new Set([]);
+
+        for (let i = 0; i < data.length; i++) {
+          const completed = data[i].values.completed.basic.value;
+          if (completed) {
+            completedRaids.add(data[i].activityDetails.referenceId);
+          }
+        }
+
+        resolve(Array.from(completedRaids));
+      })
+      .catch(() => {
+        reject(false);
       });
     });
   }
