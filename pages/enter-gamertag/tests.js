@@ -10,7 +10,7 @@ const f = require('./functions');
 
 describe('getBungieId(platform, gamertag)', function () {
   this.timeout(5000);
-  it('should return a bungieId if a correct platform and user ID are supplied', () => {
+  it('should return a bungieId if a correct platform and userId are supplied', () => {
     return f.getBungieId('2', 'abbott567')
     .then(response => {
       expect(response).to.not.eql(false);
@@ -48,7 +48,7 @@ describe('getBungieId(platform, gamertag)', function () {
 
 describe('getCharacter(platform, bungieId)', function () {
   this.timeout(5000);
-  it('should return a character if a correct platform and user bungieId are supplied', () => {
+  it('should return character if correct platform and bungieId are supplied', () => {
     return f.getCharacter('2', '4611686018428682003')
     .then(response => {
       expect(response).to.not.eql(false);
