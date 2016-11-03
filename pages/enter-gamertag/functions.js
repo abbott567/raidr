@@ -1,12 +1,17 @@
 const got = require('got');
 const host = require('../../config');
 
-const base = {headers: {'X-API-Key': process.env.DESTINY_API_KEY}};
+const gotOptions = {
+  headers: {
+    'X-API-Key': process.env.DESTINY_API_KEY
+  },
+  retries: 5
+};
 
 module.exports = {
   getBungieId(platform, gamertag) {
     return new Promise((resolve, reject) => {
-      got(`${host}/SearchDestinyPlayer/${platform}/${gamertag}`, base)
+      got(`${host}/SearchDestinyPlayer/${platform}/${gamertag}`, gotOptions)
       .then(data => {
         data = JSON.parse(data.body).Response[0].membershipId;
         resolve(data);
@@ -19,7 +24,7 @@ module.exports = {
 
   getCharacter(platform, bungieId) {
     return new Promise((resolve, reject) => {
-      got(`${host}/${platform}/Account/${bungieId}/Summary/`, base)
+      got(`${host}/${platform}/Account/${bungieId}/Summary/`, gotOptions)
       .then(data => {
         data = JSON.parse(data.body).Response.data.characters[0];
         const character = {
@@ -40,7 +45,7 @@ module.exports = {
 
   getRaids(platform, bungieId, characterId) {
     return new Promise((resolve, reject) => {
-      got(`${host}/Stats/ActivityHistory/${platform}/${bungieId}/${characterId}/?mode=Raid`, base)
+      got(`${host}/Stats/ActivityHistory/${platform}/${bungieId}/${characterId}/?mode=Raid`, gotOptions)
       .then(data => {
         data = JSON.parse(data.body).Response.data.activities;
         const completedRaids = new Set([]);
