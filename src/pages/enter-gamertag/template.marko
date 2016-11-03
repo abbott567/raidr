@@ -1,6 +1,11 @@
 <layout-use('../../common/layouts/default.marko')>
 
   <layout-put into="content">
+    <if (data.error)>
+      <ul>
+        <li>${data.error}</li>
+      </ul>
+    </if>
     <h1>Enter Gamertag</h1>
 
     <form method="post">

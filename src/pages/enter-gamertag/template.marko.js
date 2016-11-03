@@ -17,6 +17,12 @@ function create(__helpers) {
               into: "content",
               layout: __layoutHelper,
               renderBody: function renderBody(out) {
+                if (data.error) {
+                  out.w("<ul><li>" +
+                    escapeXml(data.error) +
+                    "</li></ul>");
+                }
+
                 out.w("<h1>Enter Gamertag</h1><form method=\"post\"><label for=\"gamertag\">Gamertag</label><input type=\"text\" name=\"gamertag\"><fieldset><legend>Choose a platform</legend><label for=\"playstation\">Playstation</label><input type=\"radio\" id=\"playstation\" name=\"platform\" value=\"2\"><label for=\"xbox\">Xbox</label><input type=\"radio\" id=\"xbox\" name=\"platform\" value=\"1\"></fieldset><button type=\"submit\">Submit</button></form>");
               }
             }, out);
