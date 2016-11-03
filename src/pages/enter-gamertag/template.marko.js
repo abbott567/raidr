@@ -1,6 +1,6 @@
 function create(__helpers) {
   var loadTemplate = __helpers.l,
-      layout_template = loadTemplate(require.resolve("../../common/layout.marko")),
+      default_template = loadTemplate(require.resolve("../../common/layouts/default.marko")),
       str = __helpers.s,
       empty = __helpers.e,
       notEmpty = __helpers.ne,
@@ -11,7 +11,7 @@ function create(__helpers) {
 
   return function render(data, out) {
     layout_use_tag({
-        __template: layout_template,
+        __template: default_template,
         getContent: function getContent(__layoutHelper) {
           layout_put_tag({
               into: "content",
