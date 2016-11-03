@@ -6,9 +6,11 @@
     <link rel="stylesheet" href="/stylesheets/style.css" type="text/css"/>
   </head>
   <body>
-    <if (data.error)>
+    <if (data.errors)>
       <ul>
-        <li>${data.error}</li>
+        <for(error in data.errors)>
+          <li>${error}</li>
+        </for>
       </ul>
     </if>
 

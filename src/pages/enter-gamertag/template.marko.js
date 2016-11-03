@@ -12,7 +12,7 @@ function create(__helpers) {
   return function render(data, out) {
     layout_use_tag({
         "*": {
-            error: data.error
+            errors: data.errors
           },
         __template: default_template,
         getContent: function getContent(__layoutHelper) {
@@ -20,7 +20,7 @@ function create(__helpers) {
               into: "content",
               layout: __layoutHelper,
               renderBody: function renderBody(out) {
-                out.w("<h1>Enter Gamertag</h1><form method=\"post\"><label for=\"gamertag\">Gamertag</label><input type=\"text\" name=\"gamertag\"><fieldset><legend>Choose a platform</legend><label for=\"playstation\">Playstation</label><input type=\"radio\" id=\"playstation\" name=\"platform\" value=\"2\"><label for=\"xbox\">Xbox</label><input type=\"radio\" id=\"xbox\" name=\"platform\" value=\"1\"></fieldset><button type=\"submit\">Submit</button></form>");
+                out.w("<h1>Enter Gamertag</h1><form method=\"post\"><label for=\"gamertag\">Gamertag</label><input type=\"text\" id=\"gamertag\" name=\"gamertag\"><fieldset><legend>Choose a platform</legend><label for=\"playstation\">Playstation</label><input type=\"radio\" id=\"playstation\" name=\"platform\" value=\"2\"><label for=\"xbox\">Xbox</label><input type=\"radio\" id=\"xbox\" name=\"platform\" value=\"1\"></fieldset><button type=\"submit\">Submit</button></form>");
               }
             }, out);
         }

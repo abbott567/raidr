@@ -137,37 +137,48 @@ describe('getRaids(platform, bungieId, characterId)', function () {
 });
 
 describe('validate(req)', () => {
-  it('should be valid if gamertag and a platform is present', () => {
+  it('should return an empty array if gamertag and a platform is present', () => {
     const req = {
       body: {
         platform: '2',
         gamertag: 'abbott567'
       }
     };
-    const valid = f.validate(req);
-    expect(valid).to.eql(true);
+    const errors = f.validate(req);
+    expect(errors.length).to.eql(0);
   });
 
-  it('should be invalid if gamertag is blank', () => {
+  it('should return 1 error in an array if gamertag is blank', () => {
     const req = {
       body: {
         platform: '2',
         gamertag: ''
       }
     };
-    const valid = f.validate(req);
-    expect(valid).to.eql(false);
+    const errors = f.validate(req);
+    expect(errors.length).to.eql(1);
   });
 
-  it('should be invalid if platform is blank', () => {
+  it('should return 1 error in an array if platform is blank', () => {
     const req = {
       body: {
         platform: '',
         gamertag: 'abbott567'
       }
     };
-    const valid = f.validate(req);
-    expect(valid).to.eql(false);
+    const errors = f.validate(req);
+    expect(errors.length).to.eql(1);
+  });
+
+  it('should return 2 errors in an array if platform and gamertag are blank', () => {
+    const req = {
+      body: {
+        platform: '',
+        gamertag: ''
+      }
+    };
+    const errors = f.validate(req);
+    expect(errors.length).to.eql(2);
   });
 });
 /* eslint-enable no-undef */

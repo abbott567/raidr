@@ -9,11 +9,11 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  const valid = validate(req);
-  if (valid) {
+  const errors = validate(req);
+  if (errors.length === 0) {
     res.redirect('next');
   } else {
-    template.render({error: 'Error'}, res);
+    template.render({errors}, res);
   }
 });
 
