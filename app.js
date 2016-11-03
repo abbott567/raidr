@@ -23,6 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', require('./src/pages/index/routes'));
 app.use('/enter-gamertag', require('./src/pages/enter-gamertag/routes'));
 app.use('/choose-fireteam-options', require('./src/pages/choose-fireteam-options/routes'));
+app.use('/await-response', require('./src/pages/await-response/routes'));
 
 // Routes for test API
 app.use('/api', require('./test/api-routes'));
