@@ -137,11 +137,12 @@ describe('getRaids(platform, bungieId, characterId)', function () {
 });
 
 describe('validate(req)', () => {
-  it('should return an empty array if gamertag and a platform is present', () => {
+  it('should return an empty array if all fields are present', () => {
     const req = {
       body: {
         platform: '2',
-        gamertag: 'abbott567'
+        gamertag: 'abbott567',
+        language: 'en'
       }
     };
     const errors = f.validate(req);
@@ -152,7 +153,8 @@ describe('validate(req)', () => {
     const req = {
       body: {
         platform: '2',
-        gamertag: ''
+        gamertag: '',
+        language: 'en'
       }
     };
     const errors = f.validate(req);
@@ -163,7 +165,20 @@ describe('validate(req)', () => {
     const req = {
       body: {
         platform: '',
-        gamertag: 'abbott567'
+        gamertag: 'abbott567',
+        language: 'en'
+      }
+    };
+    const errors = f.validate(req);
+    expect(errors.length).to.eql(1);
+  });
+
+  it('should return 1 error in an array if language is blank', () => {
+    const req = {
+      body: {
+        platform: '2',
+        gamertag: 'abbott567',
+        language: ''
       }
     };
     const errors = f.validate(req);
@@ -174,11 +189,48 @@ describe('validate(req)', () => {
     const req = {
       body: {
         platform: '',
-        gamertag: ''
+        gamertag: '',
+        language: 'en'
       }
     };
     const errors = f.validate(req);
     expect(errors.length).to.eql(2);
+  });
+
+  it('should return 2 errors in an array if platform and language are blank', () => {
+    const req = {
+      body: {
+        platform: '',
+        gamertag: 'abbott567',
+        language: ''
+      }
+    };
+    const errors = f.validate(req);
+    expect(errors.length).to.eql(2);
+  });
+
+  it('should return 2 errors in an array if gamertag and language are blank', () => {
+    const req = {
+      body: {
+        platform: '2',
+        gamertag: '',
+        language: ''
+      }
+    };
+    const errors = f.validate(req);
+    expect(errors.length).to.eql(2);
+  });
+
+  it('should return 3 errors in an array if all fields are blank', () => {
+    const req = {
+      body: {
+        platform: '',
+        gamertag: '',
+        language: ''
+      }
+    };
+    const errors = f.validate(req);
+    expect(errors.length).to.eql(3);
   });
 });
 /* eslint-enable no-undef */

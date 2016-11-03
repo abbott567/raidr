@@ -67,6 +67,7 @@ module.exports = {
   validate(req) {
     const gamertag = req.body.gamertag;
     const platform = req.body.platform;
+    const language = req.body.language;
     const errors = [];
 
     if (!gamertag) {
@@ -75,6 +76,10 @@ module.exports = {
 
     if (!platform) {
       errors.push('Choose a platform');
+    }
+
+    if (!language) {
+      errors.push('Choose a language');
     }
     return errors;
   }
