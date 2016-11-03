@@ -1,3 +1,5 @@
+require('marko/node-require').install();
+
 const path = require('path');
 const express = require('express');
 const logger = require('morgan');
@@ -17,7 +19,8 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/enter-gamertag', require('./pages/enter-gamertag/routes'));
+app.use('/', require('./src/pages/index/routes'));
+app.use('/enter-gamertag', require('./src/pages/enter-gamertag/routes'));
 app.use('/api', require('./test/api-routes'));
 
 // catch 404 and forward to error handler
