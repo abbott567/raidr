@@ -136,4 +136,38 @@ describe('getRaids(platform, bungieId, characterId)', function () {
   });
 });
 
+describe('validate(req)', () => {
+  it('should be valid if gamertag and a platform is present', () => {
+    const req = {
+      body: {
+        platform: '2',
+        gamertag: 'abbott567'
+      }
+    };
+    const valid = f.validate(req);
+    expect(valid).to.eql(true);
+  });
+
+  it('should be invalid if gamertag is blank', () => {
+    const req = {
+      body: {
+        platform: '2',
+        gamertag: ''
+      }
+    };
+    const valid = f.validate(req);
+    expect(valid).to.eql(false);
+  });
+
+  it('should be invalid if platform is blank', () => {
+    const req = {
+      body: {
+        platform: '',
+        gamertag: 'abbott567'
+      }
+    };
+    const valid = f.validate(req);
+    expect(valid).to.eql(false);
+  });
+});
 /* eslint-enable no-undef */

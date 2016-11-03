@@ -62,5 +62,14 @@ module.exports = {
         reject(false);
       });
     });
+  },
+
+  validate(req) {
+    const gamertag = req.body.gamertag;
+    const platform = req.body.platform;
+    if (platform && gamertag) {
+      return true;
+    }
+    return false;
   }
 };
