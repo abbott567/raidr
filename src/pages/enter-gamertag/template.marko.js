@@ -13,16 +13,22 @@ function create(__helpers) {
     layout_use_tag({
         __template: default_template,
         getContent: function getContent(__layoutHelper) {
-          layout_put_tag({
-              into: "content",
-              layout: __layoutHelper,
-              renderBody: function renderBody(out) {
-                if (data.error) {
+          if (data.error) {
+            layout_put_tag({
+                into: "errors",
+                layout: __layoutHelper,
+                renderBody: function renderBody(out) {
                   out.w("<ul><li>" +
                     escapeXml(data.error) +
                     "</li></ul>");
                 }
+              }, out);
+          }
 
+          layout_put_tag({
+              into: "content",
+              layout: __layoutHelper,
+              renderBody: function renderBody(out) {
                 out.w("<h1>Enter Gamertag</h1><form method=\"post\"><label for=\"gamertag\">Gamertag</label><input type=\"text\" name=\"gamertag\"><fieldset><legend>Choose a platform</legend><label for=\"playstation\">Playstation</label><input type=\"radio\" id=\"playstation\" name=\"platform\" value=\"2\"><label for=\"xbox\">Xbox</label><input type=\"radio\" id=\"xbox\" name=\"platform\" value=\"1\"></fieldset><button type=\"submit\">Submit</button></form>");
               }
             }, out);
