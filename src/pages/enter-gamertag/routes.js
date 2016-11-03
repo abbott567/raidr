@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   const errors = validate(req);
   if (errors.length === 0) {
-    res.redirect('next');
+    res.redirect('/choose-fireteam-options');
   } else {
     template.render({errors}, res);
   }
