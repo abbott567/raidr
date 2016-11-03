@@ -11,20 +11,11 @@ function create(__helpers) {
 
   return function render(data, out) {
     layout_use_tag({
+        "*": {
+            error: data.error
+          },
         __template: default_template,
         getContent: function getContent(__layoutHelper) {
-          if (data.error) {
-            layout_put_tag({
-                into: "errors",
-                layout: __layoutHelper,
-                renderBody: function renderBody(out) {
-                  out.w("<ul><li>" +
-                    escapeXml(data.error) +
-                    "</li></ul>");
-                }
-              }, out);
-          }
-
           layout_put_tag({
               into: "content",
               layout: __layoutHelper,

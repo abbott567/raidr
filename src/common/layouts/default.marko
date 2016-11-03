@@ -6,7 +6,12 @@
     <link rel="stylesheet" href="/stylesheets/style.css" type="text/css"/>
   </head>
   <body>
-    <layout-placeholder name="errors"/>
+    <if (data.error)>
+      <ul>
+        <li>${data.error}</li>
+      </ul>
+    </if>
+
     <layout-placeholder name="content"/>
   </body>
 </html>

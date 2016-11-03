@@ -1,13 +1,4 @@
-<layout-use('../../common/layouts/default.marko')>
-
-  <if (data.error)>
-    <layout-put into="errors">
-      <ul>
-        <li>${data.error}</li>
-      </ul>
-    </layout-put>
-  </if>
-
+<layout-use('../../common/layouts/default.marko') error=data.error>
   <layout-put into="content">
 
     <h1>Enter Gamertag</h1>
