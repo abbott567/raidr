@@ -1,5 +1,5 @@
 const got = require('got');
-const host = require('../../../config');
+const host = require('../../../config/host');
 
 const gotOptions = {
   headers: {
