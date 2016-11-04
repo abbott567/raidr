@@ -30,27 +30,5 @@ describe('validate(req)', () => {
     const errors = f.validate(req);
     expect(errors.length).to.eql(1);
   });
-
-  it('should return an array with 1 error if langauge is blank', () => {
-    const req = {
-      body: {
-        raid: 'wrath of the machine',
-        language: ''
-      }
-    };
-    const errors = f.validate(req);
-    expect(errors.length).to.eql(1);
-  });
-
-  it('should return an array with 2 errors if raid and langauge are blank', () => {
-    const req = {
-      body: {
-        raid: '',
-        language: ''
-      }
-    };
-    const errors = f.validate(req);
-    expect(errors.length).to.eql(2);
-  });
 });
 /* eslint-enable no-undef */
