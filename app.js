@@ -22,6 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Routes
 app.use('/', require('./src/pages/index/routes'));
 app.use('/enter-gamertag', require('./src/pages/enter-gamertag/routes'));
+app.use('/awaiting-orbit', require('./src/pages/awaiting-orbit/routes'));
 app.use('/choose-fireteam-options', require('./src/pages/choose-fireteam-options/routes'));
 app.use('/await-response', require('./src/pages/await-response/routes'));
 
