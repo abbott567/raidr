@@ -80,7 +80,10 @@ module.exports = {
 
     if (!language) {
       errors.push('Choose a language');
+    } else if (language !== 'en') {
+      errors.push('Unsupported language selected');
     }
+
     return errors;
   }
 };

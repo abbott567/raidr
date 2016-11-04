@@ -185,6 +185,18 @@ describe('validate(req)', () => {
     expect(errors.length).to.eql(1);
   });
 
+  it('should return 1 error in an array if language is invalid', () => {
+    const req = {
+      body: {
+        platform: '2',
+        gamertag: 'abbott567',
+        language: 'potato'
+      }
+    };
+    const errors = f.validate(req);
+    expect(errors.length).to.eql(1);
+  });
+
   it('should return 2 errors in an array if platform and gamertag are blank', () => {
     const req = {
       body: {
