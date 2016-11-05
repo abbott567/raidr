@@ -12,10 +12,6 @@ describe('choose-fireteam-options', () => {
   require('../src/pages/choose-fireteam-options/tests');
 });
 
-describe('which-raid-solo', () => {
-  require('../src/pages/which-raid-solo/tests');
-});
-
 describe('find-players', () => {
   require('../src/pages/find-players/tests');
 });
