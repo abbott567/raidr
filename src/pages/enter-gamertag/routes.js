@@ -1,5 +1,5 @@
 const express = require('express');
-const {getBungieId, validate} = require('./functions');
+const {validate, buildPlayerObject} = require('./functions');
 const template = require('./template.marko');
 
 const router = new express.Router();
@@ -11,7 +11,14 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   const errors = validate(req);
   if (errors.length === 0) {
-    res.redirect('/choose-fireteam-options');
+    buildPlayerObject(req)
+    .then(player => {
+      res.cookie('player', player);
+      res.redirect('/awaiting-orbit');
+    })
+    .catch(err => {
+      console.log(err);
+    });
   } else {
     template.render({errors}, res);
   }

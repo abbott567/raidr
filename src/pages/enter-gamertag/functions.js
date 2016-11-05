@@ -8,7 +8,7 @@ const gotOptions = {
   retries: 5
 };
 
-module.exports = {
+const _this = module.exports = {
   getBungieId(platform, gamertag) {
     return new Promise((resolve, reject) => {
       got(`${host}/SearchDestinyPlayer/${platform}/${gamertag}`, gotOptions)
@@ -28,7 +28,7 @@ module.exports = {
       .then(data => {
         data = JSON.parse(data.body).Response.data.characters[0];
         const character = {
-          characterId: data.characterId,
+          characterId: data.characterBase.characterId,
           class: data.characterBase.classType,
           level: data.characterLevel,
           light: data.characterBase.powerLevel,
@@ -86,5 +86,48 @@ module.exports = {
     }
 
     return errors;
+  },
+
+  buildPlayerObject: req => {
+    return new Promise((resolve, reject) => {
+      const gamertag = req.body.gamertag;
+      const platform = req.body.platform;
+      _this.getBungieId(platform, gamertag)
+      .then(bungieId => {
+        const user = {
+          platform,
+          gamertag,
+          bungieId
+        };
+        return user;
+      })
+      .then(user => {
+        return Promise.all([user, _this.getCharacter(user.platform, user.bungieId)]);
+      })
+      .then(([user, character]) => {
+        return Promise.all([user, character, _this.getRaids(user.platform, user.bungieId, character.characterId)]);
+      })
+      .then(([user, character, raids]) => {
+        const player = {
+          platform: user.platform,
+          gamertag: user.gamertag,
+          bungieId: user.bungieId,
+          grimoire: character.grimoire,
+          emblem: character.emblem,
+          background: character.background,
+          character: {
+            characterId: character.characterId,
+            class: character.class,
+            level: character.level,
+            light: character.light
+          },
+          completedRaids: raids
+        };
+        resolve(player);
+      })
+      .catch(err => {
+        reject(err);
+      });
+    });
   }
 };
