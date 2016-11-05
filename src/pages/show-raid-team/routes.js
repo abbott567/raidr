@@ -1,5 +1,6 @@
 const express = require('express');
 const template = require('./template.marko');
+const {validate} = require('./functions');
 
 const router = new express.Router();
 
@@ -8,8 +9,8 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  const join = parseInt(req.body.join, 10);
-  if (join === 1) {
+  const errors = validate(req);
+  if (errors.length === 0) {
     res.redirect('await-decision');
   } else {
     res.redirect('show-raid-team');

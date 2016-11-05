@@ -20,4 +20,8 @@ describe('find-a-team', () => {
   require('../src/pages/find-a-team/tests');
 });
 
+describe('show-raid-team', () => {
+  require('../src/pages/show-raid-team/tests');
+});
+
 /* eslint-enable no-undef */
