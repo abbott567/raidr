@@ -28,5 +28,15 @@ describe('validate(req)', () => {
     const errors = f.validate(req);
     expect(errors.length).to.eql(1);
   });
+
+  it('should return 1 error if raid chosen > 8', () => {
+    const req = {
+      body: {
+        raid: '9'
+      }
+    };
+    const errors = f.validate(req);
+    expect(errors.length).to.eql(1);
+  });
 });
 /* eslint-enable no-undef */
