@@ -9,7 +9,12 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-
+  const errors = validate(req);
+  if (errors.length === 0) {
+    res.redirect('/show-raid-team');
+  } else {
+    template.render({errors}, res);
+  }
 });
 
 module.exports = router;

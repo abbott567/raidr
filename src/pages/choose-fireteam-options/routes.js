@@ -10,12 +10,12 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
   const gameType = req.body['game-type'];
-  const errors = validate();
+  const errors = validate(req);
   if (errors.length === 0) {
     if (gameType === 'solo') {
-      res.redirect('/which-raid-solo');
+      res.redirect('/find-a-team');
     } else {
-      res.redirect('/which-raid-team');
+      res.redirect('/find-players');
     }
   } else {
     template.render({errors}, res);
