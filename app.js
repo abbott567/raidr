@@ -24,7 +24,12 @@ app.use('/', require('./src/pages/index/routes'));
 app.use('/enter-gamertag', require('./src/pages/enter-gamertag/routes'));
 app.use('/awaiting-orbit', require('./src/pages/awaiting-orbit/routes'));
 app.use('/choose-fireteam-options', require('./src/pages/choose-fireteam-options/routes'));
+// app.use('/which-raid-team', require('./src/pages/which-raid-team/routes'));
 app.use('/await-response', require('./src/pages/await-response/routes'));
+// app.use('/which-raid-solo', require('./src/pages/which-raid-solo/routes'));
+// app.use('/await-decision', require('./src/pages/await-decision/routes'));
+// app.use('/success-you-were-accepted', require('./src/pages/success-you-were-accepted/routes'));
+// app.use('/invite-user-to-your-game', require('./src/pages/invite-user-to-your-game/routes'));
 
 // Routes for test API
 app.use('/api', require('./test/api-routes'));
