@@ -4,7 +4,7 @@ module.exports = {
     const players = parseInt(req.body.players, 10);
     const errors = [];
 
-    if (!raid) {
+    if (!raid || raid > 8) {
       errors.push('Choose a raid');
     }
 

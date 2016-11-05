@@ -20,6 +20,17 @@ describe('validate(req)', () => {
     expect(errors.length).to.eql(0);
   });
 
+  it('should return 1 error if raid chosen is greater than 8', () => {
+    const req = {
+      body: {
+        raid: '9',
+        players: '2'
+      }
+    };
+    const errors = f.validate(req);
+    expect(errors.length).to.eql(1);
+  });
+
   it('should return 1 error if raid chosen is invalid', () => {
     const req = {
       body: {
