@@ -9,11 +9,14 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
+  const join = parseInt(req.body.join, 10);
   const errors = validate(req);
-  if (errors.length === 0) {
+  if (errors.length === 0 && join === 1) {
     res.redirect('await-decision');
-  } else {
+  } else if (errors.length === 0 && join === 0) {
     res.redirect('show-raid-team');
+  } else {
+    template.render({errors}, res);
   }
 });
 
