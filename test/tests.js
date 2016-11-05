@@ -16,4 +16,8 @@ describe('find-players', () => {
   require('../src/pages/find-players/tests');
 });
 
+describe('find-a-team', () => {
+  require('../src/pages/find-a-team/tests');
+});
+
 /* eslint-enable no-undef */

@@ -26,7 +26,7 @@ app.use('/awaiting-orbit', require('./src/pages/awaiting-orbit/routes'));
 app.use('/choose-fireteam-options', require('./src/pages/choose-fireteam-options/routes'));
 app.use('/find-players', require('./src/pages/find-players/routes'));
 app.use('/await-response', require('./src/pages/await-response/routes'));
-// app.use('/find-a-team', require('./src/pages/find-a-team/routes'));
+app.use('/find-a-team', require('./src/pages/find-a-team/routes'));
 // app.use('/await-decision', require('./src/pages/await-decision/routes'));
 // app.use('/success-you-were-accepted', require('./src/pages/success-you-were-accepted/routes'));
 // app.use('/invite-user-to-your-game', require('./src/pages/invite-user-to-your-game/routes'));
