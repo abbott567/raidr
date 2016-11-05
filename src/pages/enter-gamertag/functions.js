@@ -28,6 +28,7 @@ module.exports = {
       .then(data => {
         data = JSON.parse(data.body).Response.data.characters[0];
         const character = {
+          id: data.characterBase.characterId,
           class: data.characterBase.classType,
           level: data.characterLevel,
           light: data.characterBase.powerLevel,

@@ -38,6 +38,7 @@ router.get('/:platform/Account/:bungieId/Summary/', (req, res) => {
           characters: [
             {
               characterBase: {
+                characterId: 2305843009252290959,
                 powerLevel: 390,
                 classType: 2
               },
