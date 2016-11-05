@@ -8,8 +8,7 @@ const expect = chai.expect;
 
 const f = require('./functions');
 
-describe('getBungieId(platform, gamertag)', function () {
-  this.timeout(5000);
+describe('getBungieId(platform, gamertag)', () => {
   it('should return a bungieId if a correct platform and userId are supplied', () => {
     return f.getBungieId('2', 'abbott567')
     .then(response => {
@@ -84,24 +83,23 @@ describe('getCharacter(platform, bungieId)', function () {
   });
 });
 
-describe('getRaids(platform, bungieId, characterId)', function () {
-  this.timeout(5000);
+describe('getRaids(platform, bungieId, characterId)', () => {
   it('Should return an array', () => {
-    return f.getRaids('2', '4611686018428682003', '2305843009252290959')
+    return f.getRaids('2', '4611686018428682003', '2305843009252291000')
     .then(response => {
       expect(response).to.be.an('array');
     });
   });
 
   it('Should return FALSE if platform is blank', () => {
-    return f.getRaids('', '4611686018428682003', '2305843009252290959')
+    return f.getRaids('', '4611686018428682003', '2305843009252291000')
     .catch(err => {
       expect(err).to.eql(false);
     });
   });
 
   it('Should return FALSE if bungieId is blank', () => {
-    return f.getRaids('2', '', '2305843009252290959')
+    return f.getRaids('2', '', '2305843009252291000')
     .catch(err => {
       expect(err).to.eql(false);
     });
@@ -115,14 +113,14 @@ describe('getRaids(platform, bungieId, characterId)', function () {
   });
 
   it('Should return FALSE if platform is invalid', () => {
-    return f.getRaids('3', '4611686018428682003', '2305843009252290959')
+    return f.getRaids('3', '4611686018428682003', '2305843009252291000')
     .catch(err => {
       expect(err).to.eql(false);
     });
   });
 
   it('Should return FALSE if bungieId is invalid', () => {
-    return f.getRaids('2', '567', '2305843009252290959')
+    return f.getRaids('2', '567', '2305843009252291000')
     .catch(err => {
       expect(err).to.eql(false);
     });
@@ -243,6 +241,76 @@ describe('validate(req)', () => {
     };
     const errors = f.validate(req);
     expect(errors.length).to.eql(3);
+  });
+});
+
+describe('buildPlayerObject(req)', () => {
+  it('should return a player object if successful', () => {
+    const req = {
+      body: {
+        platform: '2',
+        gamertag: 'abbott567'
+      }
+    };
+    return f.buildPlayerObject(req)
+    .then(player => {
+      expect(player).to.eql(
+        {
+          platform: '2',
+          gamertag: 'abbott567',
+          bungieId: '4611686018428682003',
+          grimoire: 4485,
+          emblem: '/common/destiny_content/icons/4ddc836fe272a8c377635fa6cfa1d7a9.jpg',
+          background: '/common/destiny_content/icons/580b6d043f3f977531477a690a2771d9.jpg',
+          character: {
+            characterId: '2305843009252291000',
+            class: 2,
+            level: 40,
+            light: 390
+          },
+          completedRaids: [260765522]
+        }
+      );
+    });
+  });
+
+  it('should return false if platform blank', () => {
+    const req = {
+      body: {
+        platform: '',
+        gamertag: 'abbott567'
+      }
+    };
+    return f.buildPlayerObject(req)
+    .catch(err => {
+      expect(err).to.eql(false);
+    });
+  });
+
+  it('should return false if gamertag blank', () => {
+    const req = {
+      body: {
+        platform: '2',
+        gamertag: ''
+      }
+    };
+    return f.buildPlayerObject(req)
+    .catch(err => {
+      expect(err).to.eql(false);
+    });
+  });
+
+  it('should return false if gamertag and platform blank', () => {
+    const req = {
+      body: {
+        platform: '',
+        gamertag: ''
+      }
+    };
+    return f.buildPlayerObject(req)
+    .catch(err => {
+      expect(err).to.eql(false);
+    });
   });
 });
 /* eslint-enable no-undef */
