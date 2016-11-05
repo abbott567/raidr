@@ -1,0 +1,14 @@
+<layout-use('../../common/layouts/default.marko') errors=data.errors>
+  <layout-put into="content">
+
+    <h1>Raid team found</h1>
+
+    <h2>Do you want to join this team?</h2>
+
+    <form method="post">
+      <button type="submit" name="join" value='1'>Yes</button>
+      <button type="submit" name="join" value='0'>No</button>
+    </form>
+
+  </layout-put>
+</layout-use>
