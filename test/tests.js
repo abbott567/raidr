@@ -3,28 +3,23 @@ process.env.NODE_ENV = 'test';
 require('../bin/www');
 /* eslint-disable no-undef */
 
-describe('enter-gamertag', function () {
-  this.timeout(5000);
+describe('enter-gamertag', () => {
   require('../src/pages/enter-gamertag/tests');
 });
 
-describe('choose-fireteam-options', function () {
-  this.timeout(5000);
+describe('choose-fireteam-options', () => {
   require('../src/pages/choose-fireteam-options/tests');
 });
 
-describe('find-players', function () {
-  this.timeout(5000);
+describe('find-players', () => {
   require('../src/pages/find-players/tests');
 });
 
-describe('find-a-team', function () {
-  this.timeout(5000);
+describe('find-a-team', () => {
   require('../src/pages/find-a-team/tests');
 });
 
-describe('show-raid-team', function () {
-  this.timeout(5000);
+describe('show-raid-team', () => {
   require('../src/pages/show-raid-team/tests');
 });
 
