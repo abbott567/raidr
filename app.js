@@ -7,6 +7,15 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 // const favicon = require('serve-favicon');
 
+// Config
+const db = require('./config/db-connect');
+
+// MongoDB
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', () => {
+  console.log('database connected');
+});
+
 const app = express();
 
 // uncomment after placing your favicon in /public
