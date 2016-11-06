@@ -6,19 +6,11 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
-// Config
-const db = require('./config/db-connect');
-
-// MongoDB
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', () => {
-  console.log('database connected');
-});
-
 const app = express();
 
 if (process.env.NODE_ENV !== 'test') {
   app.use(logger('dev'));
+  require('./config/db-connect');
 }
 
 app.use(bodyParser.json());
