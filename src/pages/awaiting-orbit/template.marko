@@ -1,12 +1,22 @@
 <layout-use('../../common/layouts/default.marko') errors=data.errors>
   <layout-put into="content">
 
-    <h1>You are not in orbit</h1>
+    <if (data.errors)>
+      <h1>Whoops something went wrong</h1>
 
-    <p>
-      Everybody has their raid gear on and is ready to go. You should do the same.
-      When you're ready to raid, go to orbit and Raidr will help you find a team.
-    </p>
+      <p>
+        Sorry, it seems we couldnt retrieve some of your information from the
+        Destiny servers. <a href="/">Click this link to try again</a>.
+      </p>
+    </if>
 
+    <else>
+      <h1>You are not in orbit</h1>
+
+      <p>
+        Everybody has their raid gear on and is ready to go. You should do the same.
+        When you're ready to raid, go to orbit and Raidr will help you find a team.
+      </p>
+    </else>
   </layout-put>
 </layout-use>
