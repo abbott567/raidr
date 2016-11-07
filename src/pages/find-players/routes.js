@@ -5,7 +5,14 @@ const {validate, createGame, saveGame} = require('./functions');
 const router = new express.Router();
 
 router.get('/', (req, res) => {
-  template.render({}, res);
+  const language = req.cookies.player.language;
+  const gamertag = req.cookies.player.gamertag;
+
+  if (!language || !gamertag) {
+    res.redirect('/');
+  } else {
+    template.render({}, res);
+  }
 });
 
 router.post('/', (req, res) => {
