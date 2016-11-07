@@ -1,10 +1,11 @@
 const express = require('express');
 const template = require('./template.marko');
-const {validate} = require('./functions');
+const {validate, findGame} = require('./functions');
 
 const router = new express.Router();
 
-router.get('/', (req, res) => {
+router.get('/:raidId', (req, res) => {
+  findGame(req);
   template.render({}, res);
 });
 

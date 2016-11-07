@@ -1,3 +1,7 @@
+const mongoose = require('mongoose');
+
+const Game = mongoose.model('Game');
+
 module.exports = {
   validate: req => {
     const join = parseInt(req.body.join, 10);
@@ -12,5 +16,14 @@ module.exports = {
     }
 
     return errors;
+  },
+
+  findGame: req => {
+    const language = req.cookies.player.language;
+    const raid = req.body.raid;
+    console.log(raid)
+    Game.findOne({language, raid}, 'host', (err, host) => {
+      console.log(host);
+    });
   }
 };
