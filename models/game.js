@@ -4,7 +4,8 @@ const gameSchema = new mongoose.Schema({
   host: String,
   raid: String,
   language: String,
-  spaces: Number
+  spaces: Number,
+  createdAt: {type: Date, default: Date.now}
 });
 
 module.exports.Game = gameSchema;
