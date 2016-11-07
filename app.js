@@ -11,7 +11,7 @@ const app = express();
 
 // MongoDB
 mongoose.connect('mongodb://localhost/raidr');
-mongoose.model('Game', require('./models/game'));
+mongoose.model('Game', require('./models/game').Game);
 
 if (process.env.NODE_ENV !== 'test') {
   app.use(logger('dev'));

@@ -7,4 +7,4 @@ const gameSchema = new mongoose.Schema({
   spaces: Number
 });
 
-module.export = gameSchema;
+module.exports.Game = gameSchema;

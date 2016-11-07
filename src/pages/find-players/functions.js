@@ -30,15 +30,14 @@ module.exports = {
     const spaces = req.body.players;
     const language = req.cookies.player.language;
     const gamertag = req.cookies.player.gamertag;
-
+console.log(Game)
     if (raid && spaces && language && gamertag) {
-      const newGameInstance = new Game({
+      return new Game({
         host: req.cookies.player.gamertag,
         raid: req.body.raid,
         language: req.cookies.player.language,
         spaces: req.body.players
       });
-      return newGameInstance;
     }
     return false;
   },
