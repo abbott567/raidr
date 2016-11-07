@@ -1,6 +1,7 @@
 'use strict';
 const mongoose = require('mongoose');
 
+const Game = mongoose.model('Game');
 mongoose.Promise = global.Promise;
 
 module.exports = {
@@ -31,14 +32,6 @@ module.exports = {
     const gamertag = req.cookies.player.gamertag;
 
     if (raid && spaces && language && gamertag) {
-      const gameSchema = new mongoose.Schema({
-        host: String,
-        raid: String,
-        language: String,
-        spaces: Number
-      });
-      const Game = mongoose.model('Game', gameSchema);
-
       const newGameInstance = new Game({
         host: req.cookies.player.gamertag,
         raid: req.body.raid,
@@ -52,24 +45,14 @@ module.exports = {
 
   saveGame: game => {
     return new Promise((resolve, reject) => {
-      mongoose.connect('mongodb://localhost/raidr');
-      const db = mongoose.connection;
-      db.once('open', () => {
-        game.save()
-        .then(() => {
-          console.log('game saved');
-          mongoose.disconnect();
-        })
-        .then(() => {
-          resolve();
-        })
-        .catch(err => {
-          reject(err);
-        });
-      });
-
-      db.on('error', () => {
-        reject('database error');
+      game.save()
+      .then(() => {
+        console.log('game saved');
+        resolve();
+      })
+      .catch(err => {
+        console.log(err);
+        reject(err);
       });
     });
   }
