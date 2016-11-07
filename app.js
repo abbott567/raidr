@@ -10,10 +10,8 @@ const mongoose = require('mongoose');
 const app = express();
 
 // MongoDB
-const gameSchema = require('./models/game');
-
 mongoose.connect('mongodb://localhost/raidr');
-mongoose.model('Game', gameSchema);
+mongoose.model('Game', require('./models/game'));
 
 if (process.env.NODE_ENV !== 'test') {
   app.use(logger('dev'));
