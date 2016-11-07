@@ -3,6 +3,14 @@
 
     <h1>Raid team found</h1>
 
+    <if (data.host)>
+      ${data.host}
+    </if>
+
+    <else-if (data.waiting)>
+      ${data.waiting}
+    </else-if>
+
     <h2>Do you want to join this team?</h2>
 
     <form method="post">

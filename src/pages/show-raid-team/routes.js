@@ -5,8 +5,17 @@ const {validate, findGame} = require('./functions');
 const router = new express.Router();
 
 router.get('/:raidId', (req, res) => {
-  findGame(req);
-  template.render({}, res);
+  findGame(req)
+  .then(host => {
+    if (host) {
+      template.render({host}, res);
+    } else {
+      template.render({waiting: true}, res);
+    }
+  })
+  .catch(err => {
+    template.render({errors: [err]}, res);
+  });
 });
 
 router.post('/', (req, res) => {
