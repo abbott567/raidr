@@ -2,6 +2,7 @@
 'use-strict';
 
 require('mocha');
+const mongoose = require('mongoose');
 const chai = require('chai');
 
 const expect = chai.expect;
@@ -84,6 +85,97 @@ describe('validate(req)', () => {
     };
     const errors = f.validate(req);
     expect(errors.length).to.eql(2);
+  });
+});
+
+describe('createGame(req)', () => {
+  afterEach(() => {
+    delete mongoose.connection.models.Game;
+  });
+
+  it('should return a game if all attributes are present', () => {
+    const req = {
+      cookies: {
+        player: {
+          gamertag: 'abbott567',
+          language: 'en'
+        }
+      },
+      body: {
+        raid: '8',
+        players: 1
+      }
+    };
+    const game = f.createGame(req);
+    expect(game).to.not.eql(false);
+  });
+
+  it('should return false if gamertag is blank', () => {
+    const req = {
+      cookies: {
+        player: {
+          gamertag: '',
+          language: 'en'
+        }
+      },
+      body: {
+        raid: '8',
+        players: 1
+      }
+    };
+    const game = f.createGame(req);
+    expect(game).to.eql(false);
+  });
+
+  it('should return false if language is blank', () => {
+    const req = {
+      cookies: {
+        player: {
+          gamertag: 'abbott567',
+          language: ''
+        }
+      },
+      body: {
+        raid: '8',
+        players: 1
+      }
+    };
+    const game = f.createGame(req);
+    expect(game).to.eql(false);
+  });
+
+  it('should return false if raid is blank', () => {
+    const req = {
+      cookies: {
+        player: {
+          gamertag: 'abbott567',
+          language: 'en'
+        }
+      },
+      body: {
+        raid: '',
+        players: 1
+      }
+    };
+    const game = f.createGame(req);
+    expect(game).to.eql(false);
+  });
+
+  it('should return false if players is blank', () => {
+    const req = {
+      cookies: {
+        player: {
+          gamertag: 'abbott567',
+          language: 'en'
+        }
+      },
+      body: {
+        raid: '8',
+        players: ''
+      }
+    };
+    const game = f.createGame(req);
+    expect(game).to.eql(false);
   });
 });
 /* eslint-enable no-undef */

@@ -25,21 +25,29 @@ module.exports = {
   },
 
   createGame: req => {
-    const gameSchema = new mongoose.Schema({
-      host: String,
-      raid: String,
-      language: String,
-      spaces: Number
-    });
-    const Game = mongoose.model('Game', gameSchema);
+    const raid = req.body.raid;
+    const spaces = req.body.players;
+    const language = req.cookies.player.language;
+    const gamertag = req.cookies.player.gamertag;
 
-    const newGameInstance = new Game({
-      host: req.cookies.player.gamertag,
-      raid: req.body.raid,
-      language: req.cookies.player.language,
-      spaces: req.body.players
-    });
-    return newGameInstance;
+    if (raid && spaces && language && gamertag) {
+      const gameSchema = new mongoose.Schema({
+        host: String,
+        raid: String,
+        language: String,
+        spaces: Number
+      });
+      const Game = mongoose.model('Game', gameSchema);
+
+      const newGameInstance = new Game({
+        host: req.cookies.player.gamertag,
+        raid: req.body.raid,
+        language: req.cookies.player.language,
+        spaces: req.body.players
+      });
+      return newGameInstance;
+    }
+    return false;
   },
 
   saveGame: game => {
