@@ -85,12 +85,14 @@ const _this = module.exports = {
   buildPlayerObject: req => {
     const gamertag = req.body.gamertag;
     const platform = req.body.platform;
+    const language = req.body.language;
     return _this.getBungieId(platform, gamertag)
     .then(bungieId => {
       const user = {
         platform,
         gamertag,
-        bungieId
+        bungieId,
+        language
       };
       return user;
     })

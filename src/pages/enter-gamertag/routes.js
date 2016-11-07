@@ -13,7 +13,6 @@ router.post('/', (req, res) => {
   if (errors.length === 0) {
     buildPlayerObject(req)
     .then(player => {
-      player.language = req.body.language;
       res.cookie('player', player);
       res.redirect('/awaiting-orbit');
     })
