@@ -10,7 +10,6 @@ const app = express();
 
 if (process.env.NODE_ENV !== 'test') {
   app.use(logger('dev'));
-  require('./config/db-connect');
 }
 
 app.use(bodyParser.json());

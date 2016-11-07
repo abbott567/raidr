@@ -1,6 +1,6 @@
 const express = require('express');
 const template = require('./template.marko');
-const {validate} = require('./functions');
+const {validate, createGame, saveGame} = require('./functions');
 
 const router = new express.Router();
 
@@ -11,7 +11,15 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   const errors = validate(req);
   if (errors.length === 0) {
-    res.redirect('await-response');
+    const game = createGame(req);
+    saveGame(game)
+    .then(() => {
+      res.redirect('await-response');
+    })
+    .catch(err => {
+      console.log(err);
+      template.render({errors: ['Database error. Try again']}, res);
+    });
   } else {
     template.render({errors}, res);
   }
