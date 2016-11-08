@@ -6,8 +6,12 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const io = require('./src/common/sockets/functions');
 
 const app = express();
+
+// Sockets
+app.io = io;
 
 // MongoDB
 mongoose.connect('mongodb://localhost/raidr');

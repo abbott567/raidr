@@ -18,5 +18,32 @@
       <button type="submit" name="join" value='0'>No</button>
     </form>
 
+    <script src="/javascripts/jquery-3.1.1.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io();
+      var touchInProgress = false;
+
+      $('button').on('click touchend', function (e) {
+        e.preventDefault();
+        var selection = $(e.target).val();
+
+        if (touchInProgress) return;
+        touchInProgress = true;
+        setTimeout(function (){
+            touchInProgress = false;
+        }, 2000);
+
+        if (selection === '1') {
+          socket.emit('accept game');
+        } else {
+          socket.emit('reject game');
+        }
+      });
+
+      socket.on('moo', function (){
+        console.log('mooo:');
+      });
+    </script>
   </layout-put>
 </layout-use>
