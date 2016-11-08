@@ -105,6 +105,7 @@ const _this = module.exports = {
     .then(([user, character, raids]) => {
       const player = {
         platform: user.platform,
+        language: user.language,
         gamertag: user.gamertag,
         bungieId: user.bungieId,
         grimoire: character.grimoire,
