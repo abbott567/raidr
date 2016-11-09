@@ -12,6 +12,7 @@ io.on('connection', socket => {
     const raid = playerInfo.gameId;
     const rejectedGames = playerInfo.rejectedGames;
 
+    // Find first game on connect
     return Game.findOne(
       {language, raid, spaces: {$gt: 0}, _id: {$nin: rejectedGames}},
       'host spaces',
@@ -32,6 +33,7 @@ io.on('connection', socket => {
     });
   });
 
+  // When a user clicks no and rejects a game
   socket.on('rejected', playerInfo => {
     clearInterval(cd);
     const latestGame = playerInfo.rejectedGames.slice(-1, 1)[0];

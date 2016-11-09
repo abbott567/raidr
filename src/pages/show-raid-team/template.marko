@@ -39,23 +39,19 @@
         // Fire first game lookup
         socket.emit('playerInfo', playerInfo);
 
+        // When the timer hits 0
         socket.on('timer expired', function (gameId) {
           console.log('timer expired');
           playerInfo.rejectedGames.push(gameId);
           socket.emit('playerInfo', playerInfo);
         });
 
+        // Update the timer every second
         socket.on('timer count', function (time) {
           $('#timer').html(time);
         });
 
-        $(document).on('click', '#no', function (e) {
-          e.preventDefault();
-          playerInfo.rejectedGames.push(currentGame);
-          socket.emit('rejected', playerInfo);
-          socket.emit('playerInfo', playerInfo);
-        });
-
+        // New game received, update DOM
         socket.on('update game info', function (game) {
           currentGame = game._id;
           $('#host span').text(game.host);
@@ -66,11 +62,20 @@
           $('#game-info').show();
         });
 
+        // Game wasn't received, display error
         socket.on('err', function (err) {
           console.log(err)
           $('h2').text(err);
           $('form').hide();
           $('#game-info').hide();
+        });
+
+        // When you reject a game
+        $(document).on('click', '#no', function (e) {
+          e.preventDefault();
+          playerInfo.rejectedGames.push(currentGame);
+          socket.emit('rejected', playerInfo);
+          socket.emit('playerInfo', playerInfo);
         });
       });
     </script>
