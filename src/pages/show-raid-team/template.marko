@@ -1,48 +1,77 @@
 <layout-use('../../common/layouts/default.marko') errors=data.errors>
   <layout-put into="content">
 
-    <h1>Raid team found</h1>
+    <h1>Find a raid team</h1>
 
-    <if (data.host)>
-      ${data.host}
-    </if>
 
-    <else-if (data.waiting)>
-      ${data.waiting}
-    </else-if>
+    <div id="dynamic-content">
+      <h2>Loading...</h2>
 
-    <h2>Do you want to join this team?</h2>
+      <p id="timer"></p>
 
-    <form method="post">
-      <button type="submit" name="join" value='1'>Yes</button>
-      <button type="submit" name="join" value='0'>No</button>
+      <div id="game-info" style="display:none">
+        <p id="host">Host: <span></span></p>
+        <p id="spaces">Spaces: <span></span></p>
+      </div>
+    </div>
+
+    <form method="post" style="display:none">
+      <h3>Join this game?</h3>
+      <button id="yes" type="submit" name="join" value='1'>Yes</button>
+      <button id="no" type="submit" name="join" value='0'>No</button>
     </form>
 
     <script src="/javascripts/jquery-3.1.1.min.js"></script>
+    <script src="/javascripts/js-cookie.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script>
       var socket = io();
-      var touchInProgress = false;
 
-      $('button').on('click touchend', function (e) {
-        e.preventDefault();
-        var selection = $(e.target).val();
+      $(document).ready(function () {
+        var playerInfo = {};
+        var currentGame;
 
-        if (touchInProgress) return;
-        touchInProgress = true;
-        setTimeout(function (){
-            touchInProgress = false;
-        }, 2000);
+        // Set up object for mongo query
+        playerInfo.player = JSON.parse(Cookies.get('player').slice(2));
+        playerInfo.gameId = window.location.href.split('/').pop();
+        playerInfo.rejectedGames = [];
 
-        if (selection === '1') {
-          socket.emit('accept game');
-        } else {
-          socket.emit('reject game');
-        }
-      });
+        // Fire first game lookup
+        socket.emit('playerInfo', playerInfo);
 
-      socket.on('moo', function (){
-        console.log('mooo:');
+        socket.on('timer expired', function (gameId) {
+          console.log('timer expired');
+          playerInfo.rejectedGames.push(gameId);
+          socket.emit('playerInfo', playerInfo);
+        });
+
+        socket.on('timer count', function (time) {
+          $('#timer').html(time);
+        });
+
+        $(document).on('click', '#no', function (e) {
+          e.preventDefault();
+          playerInfo.rejectedGames.push(currentGame);
+          socket.emit('rejected', playerInfo);
+          socket.emit('playerInfo', playerInfo);
+        });
+
+        socket.on('update game info', function (game) {
+          currentGame = game._id;
+          $('#host span').text(game.host);
+          $('#spaces span').text(game.spaces);
+
+          $('h2').text('Game found');
+          $('form').show();
+          $('#game-info').show();
+        });
+
+        socket.on('err', function (err) {
+          console.log(err)
+          $('h2').text(err);
+          $('form').hide();
+          $('#game-info').hide();
+        });
       });
     </script>
   </layout-put>
