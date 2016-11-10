@@ -19,6 +19,7 @@ io.on('connection', socket => {
       {sort: {createdAt: 1}}
     )
     .then(game => {
+      console.log(game)
       if (game) {
         game.spaces--;
         return Promise.all([game, game.save()]);
@@ -33,6 +34,12 @@ io.on('connection', socket => {
     });
   });
 
+  // When a user clicks yes and accepts a game
+  socket.on('accepted', () => {
+    clearInterval(cd);
+    socket.emit('redirect success');
+  });
+
   // When a user clicks no and rejects a game
   socket.on('rejected', playerInfo => {
     clearInterval(cd);
@@ -41,7 +48,6 @@ io.on('connection', socket => {
     console.log('game rejected');
     Game.findById(latestGame)
     .then(game => {
-      console.log('moo', game);
       game.spaces++;
       return game.save();
     })

@@ -55,7 +55,7 @@
         socket.on('update game info', function (game) {
           currentGame = game._id;
           $('#host span').text(game.host);
-          $('#spaces span').text(game.spaces);
+          $('#spaces span').text(game.spaces + 1);
 
           $('h2').text('Game found');
           $('form').show();
@@ -64,16 +64,23 @@
 
         // Game wasn't received, display error
         socket.on('err', function (err) {
-          console.log(err)
           $('h2').text(err);
           $('form').hide();
           $('#game-info').hide();
 
-          console.log(playerInfo.rejectedGames.length > 0);
-          console.log(err === 'No games found');
           if (err === 'No games found' && playerInfo.rejectedGames.length > 0) {
             $('#timer').before('<a href="' + window.location.href + '">Click here to view rejected games again</a>')
           }
+        });
+
+        socket.on('redirect success', function () {
+          window.location.href = '/await-decision';
+        });
+
+        // When you accept a game
+        $(document).on('click', '#yes', function (e) {
+          e.preventDefault();
+          socket.emit('accepted', playerInfo);
         });
 
         // When you reject a game
