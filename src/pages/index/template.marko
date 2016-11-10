@@ -1,0 +1,37 @@
+<layout-use('../../common/layouts/default.marko') errors=data.errors>
+  <layout-put into="content">
+
+    <unless (data.status)>
+      <form id="player-info">
+        <label for="gamertag">Gamertag</label>
+        <input type="text" id="gamertag" name="gamertag">
+
+        <fieldset>
+          <legend>Choose a platform</legend>
+          <label for="playstation">Playstation</label>
+          <input type="radio" id="playstation" name="platform" value="2" />
+
+          <label for="xbox">Xbox</label>
+          <input type="radio" id="xbox" name="platform" value="1" />
+        </fieldset>
+
+        <label for="language">Language</label>
+        <select name="language">
+          <option value="en">English</option>
+        </select>
+
+        <button type="submit">Submit</button>
+      </form>
+    </unless>
+
+    <else>
+      <include-html('../../../public/forms/find-players-or-game.html')/>
+    </else>
+
+    <script src="/javascripts/jquery-3.1.1.min.js"></script>
+    <script src="/javascripts/js-cookie.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/javascripts/application.js"></script>
+
+  </layout-put>
+</layout-use>

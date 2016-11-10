@@ -48,7 +48,6 @@
           "argsIgnorePattern": "^_"
         }
       ]
-    },
-    "esnext": true
+    }
   }
 }

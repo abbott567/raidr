@@ -7,14 +7,28 @@ io.on('connection', socket => {
   let cd;
   console.log('a user connected');
 
-  socket.on('playerInfo', playerInfo => {
-    const language = playerInfo.player.language;
-    const raid = playerInfo.gameId;
-    const rejectedGames = playerInfo.rejectedGames;
+  socket.on('create game', (host, raid, spaces) => {
+    host.socketId = socket.id;
 
+    const nGame = new Game({
+      host,
+      raid,
+      spaces
+    });
+
+    nGame.save()
+    .then(() => {
+      socket.emit('game saved', true);
+    })
+    .catch(() => {
+      socket.emit('game saved', false);
+    });
+  });
+
+  socket.on('find a game', (player, raid, rejectedGames) => {
     // Find first game on connect
     return Game.findOne(
-      {language, raid, spaces: {$gt: 0}, _id: {$nin: rejectedGames}},
+      {'host.language': player.language, 'raid': raid, 'spaces': {$gt: 0}, '_id': {$nin: rejectedGames}},
       'host spaces',
       {sort: {createdAt: 1}}
     )
@@ -23,6 +37,7 @@ io.on('connection', socket => {
         game.spaces--;
         return Promise.all([game, game.save()]);
       }
+      socket.emit('err', 'No games found');
     })
     .then(([game]) => {
       socket.emit('update game info', game);
@@ -36,15 +51,13 @@ io.on('connection', socket => {
   // When a user clicks yes and accepts a game
   socket.on('accepted', () => {
     clearInterval(cd);
-    socket.emit('redirect success');
+    socket.emit('join success');
   });
 
   // When a user clicks no and rejects a game
-  socket.on('rejected', playerInfo => {
+  socket.on('rejected', (player, rejectedGames) => {
     clearInterval(cd);
-    const rejectedGames = playerInfo.rejectedGames;
     const latestGame = rejectedGames.pop();
-    console.log('game rejected');
     Game.findById(latestGame)
     .then(game => {
       game.spaces++;
