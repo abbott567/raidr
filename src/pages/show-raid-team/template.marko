@@ -68,12 +68,17 @@
           $('h2').text(err);
           $('form').hide();
           $('#game-info').hide();
+
+          if (err === 'No game found' && playerInfo.rejectedGames.length > 0) {
+            $('#err').append('do you want to view rejected games again?')
+          }
         });
 
         // When you reject a game
         $(document).on('click', '#no', function (e) {
           e.preventDefault();
           playerInfo.rejectedGames.push(currentGame);
+          console.log(playerInfo.rejectedGames)
           socket.emit('rejected', playerInfo);
           socket.emit('playerInfo', playerInfo);
         });

@@ -36,10 +36,13 @@ io.on('connection', socket => {
   // When a user clicks no and rejects a game
   socket.on('rejected', playerInfo => {
     clearInterval(cd);
-    const latestGame = playerInfo.rejectedGames.slice(-1, 1)[0];
+    const rejectedGames = playerInfo.rejectedGames;
+    const latestGame = rejectedGames.pop();
+    console.log('lg', latestGame)
     console.log('game rejected');
     Game.findById(latestGame)
     .then(game => {
+      console.log('moo', game);
       game.spaces++;
       return game.save();
     })
