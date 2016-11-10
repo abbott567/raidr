@@ -19,7 +19,6 @@ io.on('connection', socket => {
       {sort: {createdAt: 1}}
     )
     .then(game => {
-      console.log(game)
       if (game) {
         game.spaces--;
         return Promise.all([game, game.save()]);
