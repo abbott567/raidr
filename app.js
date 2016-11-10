@@ -13,6 +13,9 @@ const app = express();
 mongoose.connect('mongodb://localhost/raidr');
 mongoose.model('Game', require('./models/game').Game);
 
+// Sockets
+app.io = require('./src/common/sockets/functions');
+
 if (process.env.NODE_ENV !== 'test') {
   app.use(logger('dev'));
 }

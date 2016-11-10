@@ -19,11 +19,29 @@ module.exports = {
   },
 
   findGame: req => {
-    const language = req.cookies.player.language;
-    const raid = req.body.raid;
-    console.log(raid)
-    Game.findOne({language, raid}, 'host', (err, host) => {
-      console.log(host);
+    return new Promise((resolve, reject) => {
+      const language = req.cookies.player.language;
+      const raid = req.params.raidId;
+      Game.findOne(
+        {language, raid, spaces: {$gt: 0}},
+        'host',
+        {sort: {createdAt: 1}},
+        (err, host) => {
+          if (err) {
+            reject(err);
+          } else if (host) {
+            resolve(host);
+          } else {
+            resolve();
+          }
+        }
+      );
     });
   }
 };
+
+// SELECT host
+// FROM games
+// WHERE language = language, raid = raid, spaces > 0
+// ORDER BY createdAt DESC
+// LIMIT 1

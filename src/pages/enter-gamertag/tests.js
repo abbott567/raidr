@@ -249,7 +249,8 @@ describe('buildPlayerObject(req)', () => {
     const req = {
       body: {
         platform: '2',
-        gamertag: 'abbott567'
+        gamertag: 'abbott567',
+        language: 'en'
       }
     };
     return f.buildPlayerObject(req)
@@ -260,6 +261,7 @@ describe('buildPlayerObject(req)', () => {
           gamertag: 'abbott567',
           bungieId: '4611686018428682003',
           grimoire: 4485,
+          language: 'en',
           emblem: '/common/destiny_content/icons/4ddc836fe272a8c377635fa6cfa1d7a9.jpg',
           background: '/common/destiny_content/icons/580b6d043f3f977531477a690a2771d9.jpg',
           character: {
