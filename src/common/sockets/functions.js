@@ -38,7 +38,6 @@ io.on('connection', socket => {
     clearInterval(cd);
     const rejectedGames = playerInfo.rejectedGames;
     const latestGame = rejectedGames.pop();
-    console.log('lg', latestGame)
     console.log('game rejected');
     Game.findById(latestGame)
     .then(game => {

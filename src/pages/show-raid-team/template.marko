@@ -69,8 +69,10 @@
           $('form').hide();
           $('#game-info').hide();
 
-          if (err === 'No game found' && playerInfo.rejectedGames.length > 0) {
-            $('#err').append('do you want to view rejected games again?')
+          console.log(playerInfo.rejectedGames.length > 0);
+          console.log(err === 'No games found');
+          if (err === 'No games found' && playerInfo.rejectedGames.length > 0) {
+            $('#timer').before('<a href="' + window.location.href + '">Click here to view rejected games again</a>')
           }
         });
 
