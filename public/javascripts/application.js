@@ -122,20 +122,20 @@ $(function () {
   /* eslint-enable no-undef */
 
   function loadStartPage() {
-    $('#content').load('/forms/find-players-or-game.html');
+    $('#content').load('/views/find-players-or-game.html');
     connectSockets(player);
   }
 
   function loadCreateAGame() {
-    $('#content').load('/forms/create-a-game.html');
+    $('#content').load('/views/create-a-game.html');
   }
 
   function loadAwaitPlayers() {
-    $('#content').load('/forms/await-players.html');
+    $('#content').load('/views/await-players.html');
   }
 
   function loadFindAGame() {
-    $('#content').load('/forms/find-a-game.html');
+    $('#content').load('/views/find-a-game.html');
   }
 
   function connectSockets(player) {
@@ -169,7 +169,7 @@ $(function () {
     socket.on('update game info', function (game) {
       currentGame = game;
       game.host = JSON.parse(game.host);
-      $('#content').load('/forms/game-found.html', function () {
+      $('#content').load('/views/game-found.html', function () {
         $('#spaces').text(game.spaces + 1);
         $('#host').text(game.host.gamertag);
         $('#grimoire').text(game.host.grimoire);
