@@ -37,7 +37,8 @@
     ],
     "env": [
       "jquery",
-      "browser"
+      "browser",
+      "mocha"
     ],
     "rules": {
       "xo/no-process-exit": 0,

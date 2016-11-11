@@ -5,7 +5,6 @@ const Game = mongoose.model('Game');
 
 io.on('connection', socket => {
   let cd;
-  console.log('a user connected');
 
   socket.on('create game', (host, raid, spaces) => {
     host.socketId = socket.id;

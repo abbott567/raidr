@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = new express.Router();
 
-router.get('/SearchDestinyPlayer/:platform/:gamertag', (req, res) => {
+router.get('/SearchDestinyPlayer/:platform/:gamertag/', (req, res) => {
   const platform = req.params.platform;
   const gamertag = req.params.gamertag;
 

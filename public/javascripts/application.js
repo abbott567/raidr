@@ -35,7 +35,6 @@ $(function () {
 
   function getBungieId(apikey, platform, gamertag) {
     var bungieURL = host + 'SearchDestinyPlayer/' + platform + '/' + gamertag + '/';
-
     $.ajax({
       url: bungieURL,
       method: 'get',
@@ -55,7 +54,6 @@ $(function () {
 
   function getCharacter(apikey, platform, bungieId) {
     var bungieURL = host + platform + '/Account/' + bungieId + '/Summary/';
-
     $.ajax({
       url: bungieURL,
       method: 'get',
