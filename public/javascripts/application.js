@@ -1,16 +1,18 @@
 $(function () {
+  var host = $('#host').val();
   var apikey = '21f679f2524e4b8aa7567e6e80860192';
   var playerCookie = Cookies.get('player');
   var socket;
   var rejectedGames = [];
   var raidId;
   var currentGame;
+  var player;
 
   if (playerCookie) {
     player = playerCookie;
     connectSockets(player);
   } else {
-    var player = {
+    player = {
       platform: '',
       language: '',
       gamertag: '',
@@ -29,7 +31,7 @@ $(function () {
   }
 
   function getBungieId(apikey, platform, gamertag) {
-    var bungieURL = 'https://www.bungie.net/platform/destiny/SearchDestinyPlayer/' + platform + '/' + gamertag + '/';
+    var bungieURL = host + 'SearchDestinyPlayer/' + platform + '/' + gamertag + '/';
 
     $.ajax({
       url: bungieURL,
@@ -49,7 +51,7 @@ $(function () {
   }
 
   function getCharacter(apikey, platform, bungieId) {
-    var bungieURL = 'https://www.bungie.net/platform/destiny/' + platform + '/Account/' + bungieId + '/Summary/';
+    var bungieURL = host + platform + '/Account/' + bungieId + '/Summary/';
 
     $.ajax({
       url: bungieURL,
@@ -72,13 +74,13 @@ $(function () {
         getRaids(apikey, platform, bungieId, player.characterId);
       },
       error: function (err) {
-        console.log(err);
+        // console.log(err);
       }
     });
   }
 
   function getRaids(apikey, platform, bungieId, characterId) {
-    var bungieURL = 'https://www.bungie.net/platform/destiny/Stats/ActivityHistory/' + platform + '/' + bungieId + '/' + characterId + '/?mode=Raid';
+    var bungieURL = host + 'Stats/ActivityHistory/' + platform + '/' + bungieId + '/' + characterId + '/?mode=Raid';
 
     $.ajax({
       url: bungieURL,
@@ -104,7 +106,7 @@ $(function () {
         storePlayer(player);
       },
       error: function (err) {
-        console.log(err);
+        // console.log(err);
       }
     });
   }
@@ -142,13 +144,13 @@ $(function () {
       if (response) {
         loadAwaitPlayers();
       } else {
-        console.log(response);
+        // console.log(response);
       }
     });
 
     // When the timer hits 0
     socket.on('timer expired', function (gameId) {
-      console.log('timer expired');
+      // console.log('timer expired');
       rejectedGames.push(gameId);
       socket.emit('find a game', player, raidId, rejectedGames);
     });
@@ -177,7 +179,7 @@ $(function () {
     // Game wasn't received, display error
     socket.on('err', function (err) {
       if (err === 'No games found' && rejectedGames.length > 0) {
-        $('#content').html('<h2>' + err + '</h2><button id="start-over">Start over</button>')
+        $('#content').html('<h2>' + err + '</h2><button id="start-over">Start over</button>');
       }
 
       if (err === 'No games found' && rejectedGames.length === 0) {
@@ -187,7 +189,7 @@ $(function () {
     });
 
     socket.on('join success', function () {
-      console.log(player, currentGame);
+      // console.log(player, currentGame);
       // CHANGE PAGE TO INSTRUCTIONS
       // SEND MESSAGE TO HOST ABOUT SOME DUDE WANTING TO JOIN
     });
@@ -209,11 +211,37 @@ $(function () {
 
   $(document).on('submit', '#player-info', function (e) {
     e.preventDefault();
+    var errors = [];
+
     player.gamertag = $('#gamertag').val();
     player.platform = $('input[name="platform"]:checked').val();
     player.language = $('select[name="language"]').val();
 
-    getBungieId(apikey, player.platform, player.gamertag);
+    if (player.gamertag === '') {
+      errors.push('Gamertag cannot be blank');
+    }
+
+    if (!player.platform) {
+      errors.push('Choose a platform');
+    }
+
+    if (player.language !== 'en') {
+      errors.push('Choose a valid language');
+    }
+
+    if (errors.length > 0) {
+      if ($('#errors').length === 0) {
+        $('#content').append('<ul id="errors"></ul>');
+      } else {
+        $('#errors').html('');
+      }
+
+      for (var i = 0; i < errors.length; i++) {
+        $('#errors').append('<li>' + errors[i] + '</li>');
+      }
+    } else {
+      getBungieId(apikey, player.platform, player.gamertag);
+    }
   });
 
   $(document).on('submit', '#find-type', function (e) {

@@ -1,26 +1,65 @@
 process.env.NODE_ENV = 'test';
-
+process.env.PORT = 8080;
 require('../bin/www');
+const Browser = require('zombie');
+
+Browser.localhost('raidr.herokuapp.com', process.env.PORT);
+
 /* eslint-disable no-undef */
 
-describe('enter-gamertag', () => {
-  require('../src/pages/enter-gamertag/tests');
-});
+describe('Enter gamertag screen', () => {
+  const browser = new Browser();
+  before(function (done) {
+    browser.visit('/', done);
+  });
 
-describe('choose-fireteam-options', () => {
-  require('../src/pages/choose-fireteam-options/tests');
-});
+  it('should have a status of 200', () => {
+    browser.assert.success();
+  });
 
-describe('find-players', () => {
-  require('../src/pages/find-players/tests');
-});
+  it('It should be the enter your details page"', () => {
+    browser.assert.text('h2', 'Enter your details');
+    browser.assert.element('#player-info');
+  });
 
-describe('find-a-team', () => {
-  require('../src/pages/find-a-team/tests');
-});
+  it('should have the element input#gamertag', () => {
+    browser.assert.element('#gamertag');
+  });
 
-describe('show-raid-team', () => {
-  require('../src/pages/show-raid-team/tests');
+  it('should have two elements input[name="platform"]', () => {
+    browser.assert.elements('input[name="platform"]', 2);
+  });
+
+  it('should have the element select[name="language"]', () => {
+    browser.assert.element('select[name="language"]');
+  });
+
+  it('should throw two errors when submitted and gamertag is blank and platform is not selected', () => {
+    browser.pressButton('button[type="submit"]');
+    browser.assert.element('#errors');
+  });
+
+  it('should throw one error when submitted and platform is not selected', () => {
+    browser.fill('#gamertag', 'abbott567');
+    browser.pressButton('button[type="submit"]');
+    browser.assert.element('#errors');
+  });
+
+  it('should throw one error when submitted and gamertag is blank', () => {
+    browser.fill('#gamertag', '');
+    browser.choose('#playstation');
+    browser.pressButton('button[type="submit"]');
+    browser.assert.element('#errors');
+  });
+
+  it('should load the next page if all valid', () => {
+    browser.fill('#gamertag', 'abbott567');
+    browser.choose('#playstation');
+    browser.pressButton('button[type="submit"]');
+    setTimeout(() => {
+      browser.assert.element('#find-type');
+    }, 5);
+  });
 });
 
 /* eslint-enable no-undef */

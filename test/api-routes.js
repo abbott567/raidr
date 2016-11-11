@@ -5,6 +5,7 @@ const router = new express.Router();
 router.get('/SearchDestinyPlayer/:platform/:gamertag', (req, res) => {
   const platform = req.params.platform;
   const gamertag = req.params.gamertag;
+
   if (platform === '2' && gamertag === 'abbott567') {
     res.json({
       Response: [
