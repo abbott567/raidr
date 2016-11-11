@@ -6,7 +6,6 @@ const Browser = require('zombie');
 Browser.localhost('raidr.herokuapp.com', process.env.PORT);
 
 /* eslint-disable no-undef */
-
 describe('Enter gamertag screen', () => {
   const browser = new Browser();
   before(function (done) {
