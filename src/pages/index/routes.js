@@ -1,6 +1,6 @@
 const express = require('express');
-const template = require('./template.marko');
 const host = require('../../../config/host');
+const template = require('./template.marko');
 
 const router = new express.Router();
 

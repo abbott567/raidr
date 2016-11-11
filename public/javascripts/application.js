@@ -1,12 +1,15 @@
 $(function () {
   var host = $('#host').val();
   var apikey = '21f679f2524e4b8aa7567e6e80860192';
-  var playerCookie = Cookies.get('player');
   var socket;
   var rejectedGames = [];
   var raidId;
   var currentGame;
   var player;
+
+  /* eslint-disable no-undef */
+  var playerCookie = Cookies.get('player');
+  /* eslint-enable no-undef */
 
   if (playerCookie) {
     player = playerCookie;
@@ -74,7 +77,7 @@ $(function () {
         getRaids(apikey, platform, bungieId, player.characterId);
       },
       error: function (err) {
-        // console.log(err);
+        console.log(err);
       }
     });
   }
@@ -106,7 +109,7 @@ $(function () {
         storePlayer(player);
       },
       error: function (err) {
-        // console.log(err);
+        console.log(err);
       }
     });
   }
@@ -136,7 +139,9 @@ $(function () {
   }
 
   function connectSockets(player) {
+    /* eslint-disable no-undef */
     socket = io();
+    /* eslint-enable no-undef */
 
     socket.emit('player info', player);
 
