@@ -1,8 +1,9 @@
 <layout-use('../../common/layouts/default.marko') errors=data.errors host=data.host>
   <layout-put into="content">
 
-    <h2>Enter your details</h2>
     <unless (data.status)>
+      <h2>Enter your details</h2>
+
       <form id="player-info">
         <label for="gamertag">Gamertag</label>
         <input type="text" id="gamertag" name="gamertag">

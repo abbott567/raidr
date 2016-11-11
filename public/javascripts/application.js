@@ -249,7 +249,11 @@ $(function () {
 
   $(document).on('submit', '#find-type', function (e) {
     e.preventDefault();
-    if ($('input[name="find-type-select"]:checked').val() === 'create') {
+
+    if ($('input[name="find-type-select"]:checked').length === 0) {
+      $('#content').prepend('<ul id="errors"></ul>');
+      $('#errors').append('<li>Choose an option</li>');
+    } else if ($('input[name="find-type-select"]:checked').val() === 'create') {
       loadCreateAGame();
     } else if ($('input[name="find-type-select"]:checked').val() === 'find') {
       loadFindAGame();
