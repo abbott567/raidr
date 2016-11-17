@@ -9,7 +9,7 @@ describe('- Enter gamertag screen', () => {
   });
 
   describe('<> Page elements', () => {
-    it('It should be have the h2 "Enter your details""', done => {
+    it('It should have the h2 "Enter your details""', done => {
       browser.assert.text('h2', 'Enter your details');
       done();
     });
