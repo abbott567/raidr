@@ -6,5 +6,6 @@ require('../bin/www');
 require('./validation-tests/enter-gamer-tag');
 require('./validation-tests/find-players-or-game');
 require('./validation-tests/create-a-game');
+require('./validation-tests/find-a-game');
 
 /* eslint-enable max-nested-callbacks */
