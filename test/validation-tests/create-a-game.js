@@ -1,7 +1,7 @@
 const Browser = require('zombie');
 
 /* eslint-disable max-nested-callbacks */
-describe('- Find players or game screen', () => {
+describe('- Create a game screen', () => {
   let browser;
 
   before(done => {
@@ -26,6 +26,16 @@ describe('- Find players or game screen', () => {
   describe('<> Page elements', () => {
     it('should have element form#create-a-game', done => {
       browser.assert.element('#create-a-game');
+      done();
+    });
+
+    it('should have element select#raid', done => {
+      browser.assert.element('select[name="raid"]');
+      done();
+    });
+
+    it('should have element select#players', done => {
+      browser.assert.elements('input[name="players"]', 5);
       done();
     });
   });
